@@ -23,8 +23,10 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        {/* Dev-only QA surface for the design-system kit; not in the user nav. */}
-        <Route path="/dev/components" element={<ComponentsShowcase />} />
+        {/* Dev-only QA surface for the design-system kit; only mounted in dev builds. */}
+        {import.meta.env.DEV && (
+          <Route path="/dev/components" element={<ComponentsShowcase />} />
+        )}
         <Route element={<RequireAdmin />}>
           <Route element={<AppShell />}>
             <Route path="/" element={<Home />} />
