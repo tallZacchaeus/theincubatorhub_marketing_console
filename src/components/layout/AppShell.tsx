@@ -12,6 +12,9 @@ import {
 import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthContext';
 import LogoMark from '@/components/LogoMark';
+import TopBarHelp from '@/components/TopBarHelp';
+import { GlossaryProvider } from '@/components/glossary/GlossaryProvider';
+import FirstRunPrompt from '@/components/tour/FirstRunPrompt';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import {
@@ -106,6 +109,7 @@ export default function AppShell() {
                           key={item.path}
                           type="button"
                           aria-current={itemActive ? 'page' : undefined}
+                          data-tour={item.path === '/analytics' ? 'nav-analytics' : undefined}
                           className={cn(
                             'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                             itemActive
@@ -156,6 +160,7 @@ export default function AppShell() {
   }
 
   return (
+    <GlossaryProvider>
     <TooltipProvider delayDuration={200}>
     <div className="min-h-screen bg-background">
       {/* Desktop sidebar */}
@@ -264,6 +269,7 @@ export default function AppShell() {
                 <Plus className="h-4 w-4" aria-hidden="true" />
                 New campaign
               </button>
+              <TopBarHelp />
               <button
                 type="button"
                 className="relative rounded-lg p-2 text-gray-600 transition hover:bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
@@ -290,7 +296,9 @@ export default function AppShell() {
       </div>
 
       <Toaster position="top-right" richColors />
+      <FirstRunPrompt />
     </div>
     </TooltipProvider>
+    </GlossaryProvider>
   );
 }

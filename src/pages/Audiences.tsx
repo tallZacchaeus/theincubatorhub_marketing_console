@@ -14,6 +14,7 @@ import {
 } from '@/api/endpoints/categories';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import EmptyState from '@/components/EmptyState';
+import HelpHint from '@/components/HelpHint';
 import PageHeader from '@/components/layout/PageHeader';
 import { SelectField, TextField, type SelectOption } from '@/components/form/fields';
 import { applyApiErrors } from '@/components/form/applyApiErrors';
@@ -162,7 +163,7 @@ export default function Audiences() {
         title="Audiences"
         subtitle="Groups of people to send a campaign to, built from filters."
         actions={
-          <Button onClick={() => setShowCreate(true)}>
+          <Button data-tour="new-audience" onClick={() => setShowCreate(true)}>
             <Plus className="h-4 w-4" />
             New audience
           </Button>
@@ -267,6 +268,10 @@ export default function Audiences() {
           <Form {...form}>
             <form onSubmit={form.handleSubmit((v) => createMut.mutate(v))} className="space-y-4">
               <TextField name="name" label="Name" placeholder="e.g. LITA-interested leads" />
+              <div className="flex items-center gap-1 text-sm font-medium text-gray-700">
+                <span>Audience</span>
+                <HelpHint term="audience" />
+              </div>
               <SelectField
                 name="audience_type"
                 label="Who's in this audience?"

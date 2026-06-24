@@ -13,6 +13,7 @@ import { listTemplates } from '@/api/endpoints/templates';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
+import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
 import PageHeader from '@/components/layout/PageHeader';
 import { SelectField, TextField, type SelectOption } from '@/components/form/fields';
@@ -162,7 +163,7 @@ export default function Campaigns() {
         title="Campaigns"
         subtitle="An email you send to an audience, with tracked links and results."
         actions={
-          <Button onClick={() => setShowCreate(true)}>
+          <Button data-tour="new-campaign" onClick={() => setShowCreate(true)}>
             <Plus className="h-4 w-4" />
             New campaign
           </Button>
@@ -215,9 +216,13 @@ export default function Campaigns() {
                 placeholder={templatesQuery.isLoading ? 'Loading…' : 'Choose a template'}
                 options={templateOptions}
               />
+              <div className="flex items-center gap-1 text-sm font-medium text-gray-700">
+                <span>Audience</span>
+                <HelpHint term="audience" />
+              </div>
               <SelectField
                 name="marketing_category_id"
-                label="Audience"
+                label="Who receives this"
                 placeholder={categoriesQuery.isLoading ? 'Loading…' : 'Choose an audience'}
                 options={audienceOptions}
               />

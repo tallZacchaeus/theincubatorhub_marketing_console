@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { ColumnDef } from '@tanstack/react-table';
-import { FileEdit, Loader2, Plus, Send } from 'lucide-react';
+import { FileEdit, Loader2, PlayCircle, Plus, Send } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { apiErrorMessage } from '@/api/errors';
 import { listBroadcasts } from '@/api/endpoints/broadcasts';
@@ -9,6 +9,7 @@ import { useAuth } from '@/auth/AuthContext';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import MetricCard from '@/components/MetricCard';
+import { useTour } from '@/components/tour/useTour';
 import StatusBadge from '@/components/StatusBadge';
 import PageHeader from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
@@ -47,6 +48,7 @@ const columns: ColumnDef<Broadcast, unknown>[] = [
 export default function Home() {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { start } = useTour();
 
   const { data, isLoading, error } = useQuery({
     queryKey: ['broadcasts', 'home'],
@@ -119,10 +121,16 @@ export default function Home() {
                 title="No campaigns yet"
                 description="A campaign is an email you send to an audience. Create your first one to start reaching people."
                 action={
-                  <Button onClick={() => navigate('/campaigns')}>
-                    <Plus className="h-4 w-4" />
-                    Create your first campaign
-                  </Button>
+                  <div className="flex flex-wrap items-center justify-center gap-2">
+                    <Button onClick={() => navigate('/campaigns')}>
+                      <Plus className="h-4 w-4" />
+                      Create your first campaign
+                    </Button>
+                    <Button variant="outline" onClick={start}>
+                      <PlayCircle className="h-4 w-4" />
+                      Take the 2-minute walkthrough
+                    </Button>
+                  </div>
                 }
                 showSteps
               />

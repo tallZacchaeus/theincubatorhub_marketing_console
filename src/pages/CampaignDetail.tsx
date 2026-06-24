@@ -26,6 +26,7 @@ import {
 } from '@/api/endpoints/broadcasts';
 import { createLink, deleteLink, listLinks } from '@/api/endpoints/links';
 import ConfirmDialog from '@/components/ConfirmDialog';
+import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
 import PageHeader from '@/components/layout/PageHeader';
 import { SelectField, TextField } from '@/components/form/fields';
@@ -220,6 +221,7 @@ export default function CampaignDetail() {
           <div className="mb-1 flex items-center gap-2">
             <Link2 className="h-4 w-4 text-green-600" aria-hidden="true" />
             <h2 className="text-sm font-semibold text-gray-900">Tracked links</h2>
+            <HelpHint term="tracked-link" />
           </div>
           <p className="mb-4 text-xs text-gray-500">
             Tracked links let you see what each audience clicks. Links inside the template are
@@ -300,7 +302,7 @@ export default function CampaignDetail() {
               <TextField name="utm_medium" label="utm_medium" placeholder="Optional" />
               <TextField name="utm_campaign" label="utm_campaign" placeholder="Optional" />
               <div className="sm:col-span-2 lg:col-span-3">
-                <Button type="submit" disabled={addLinkMut.isPending}>
+                <Button type="submit" data-tour="add-link" disabled={addLinkMut.isPending}>
                   <Plus className="h-4 w-4" />
                   {addLinkMut.isPending ? 'Adding…' : 'Add link'}
                 </Button>
@@ -310,8 +312,11 @@ export default function CampaignDetail() {
         </Card>
 
         {/* Actions toolbar */}
-        <Card className="p-6">
-          <h2 className="mb-4 text-sm font-semibold text-gray-900">Preview &amp; send</h2>
+        <Card className="p-6" data-tour="preview-actions">
+          <h2 className="mb-4 flex items-center gap-1 text-sm font-semibold text-gray-900">
+            Preview &amp; send
+            <HelpHint term="test-send" />
+          </h2>
           <div className="flex flex-wrap items-end gap-3">
             <Button variant="outline" onClick={() => previewMut.mutate()} disabled={previewMut.isPending}>
               <Eye className="h-4 w-4" />

@@ -13,6 +13,7 @@ import {
 import ConfirmDialog from '@/components/ConfirmDialog';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
+import HelpHint from '@/components/HelpHint';
 import PageHeader from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -213,8 +214,9 @@ export default function Templates() {
                 onChange={(e) => update({ text_body: e.target.value })}
               />
             </div>
-            <p className="text-xs text-gray-500">
-              Placeholders: <code className="rounded bg-gray-100 px-1 py-0.5 font-mono">{PLACEHOLDER_HINT}</code> — these fill in
+            <p className="flex flex-wrap items-center gap-1 text-xs text-gray-500">
+              Placeholders <HelpHint term="template" />:{' '}
+              <code className="rounded bg-gray-100 px-1 py-0.5 font-mono">{PLACEHOLDER_HINT}</code> — these fill in
               each person's details when the email is sent. Values are HTML-escaped.
             </p>
             <div className="flex items-center gap-2 pt-2">
@@ -260,7 +262,7 @@ export default function Templates() {
         title="Email templates"
         subtitle="Reusable email designs with placeholders like the person's name."
         actions={
-          <Button onClick={() => { setEditor({ ...EMPTY_EDITOR }); setPreview(null); }}>
+          <Button data-tour="new-template" onClick={() => { setEditor({ ...EMPTY_EDITOR }); setPreview(null); }}>
             <Plus className="h-4 w-4" />
             New template
           </Button>

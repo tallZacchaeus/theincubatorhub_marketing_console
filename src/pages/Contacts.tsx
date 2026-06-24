@@ -17,6 +17,7 @@ import {
 import ConfirmDialog from '@/components/ConfirmDialog';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
+import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
 import PageHeader from '@/components/layout/PageHeader';
 import { CheckboxField, TextField } from '@/components/form/fields';
@@ -306,8 +307,13 @@ export default function Contacts() {
       <Dialog open={showCreate} onOpenChange={setShowCreate}>
         <DialogContent className="rounded-2xl">
           <DialogHeader>
-            <DialogTitle>Add contact</DialogTitle>
-            <DialogDescription>Add one person to your contacts list.</DialogDescription>
+            <DialogTitle className="flex items-center gap-1">
+              Add contact
+            </DialogTitle>
+            <DialogDescription className="flex items-center gap-1">
+              Add one person to your contacts list. Consent
+              <HelpHint term="consent" /> is required to email them.
+            </DialogDescription>
           </DialogHeader>
           <Form {...createForm}>
             <form onSubmit={createForm.handleSubmit((v) => createMut.mutate(v))} className="space-y-4">
@@ -371,7 +377,10 @@ export default function Contacts() {
               </span>
             </label>
             <div className="space-y-1.5">
-              <Label htmlFor="consent-source">Consent source (lawful basis)</Label>
+              <Label htmlFor="consent-source" className="flex items-center gap-1">
+                Consent source (lawful basis)
+                <HelpHint term="consent" />
+              </Label>
               <Input
                 id="consent-source"
                 className="rounded-xl"

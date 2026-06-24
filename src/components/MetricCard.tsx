@@ -1,4 +1,5 @@
 import type { LucideIcon } from 'lucide-react';
+import HelpHint from '@/components/HelpHint';
 import { cn } from '@/lib/utils';
 
 export type MetricTone = 'green' | 'blue' | 'teal' | 'purple' | 'orange' | 'pink';
@@ -26,6 +27,7 @@ export default function MetricCard({
   helperText,
   tone = 'green',
   className,
+  hintTerm,
 }: {
   icon: LucideIcon;
   value: string | number;
@@ -33,6 +35,8 @@ export default function MetricCard({
   helperText?: string;
   tone?: MetricTone;
   className?: string;
+  /** Optional glossary term id; renders a HelpHint next to the label. */
+  hintTerm?: string;
 }) {
   const t = TONES[tone];
   return (
@@ -49,7 +53,10 @@ export default function MetricCard({
         </div>
       </div>
       <p className="text-3xl font-bold tracking-tight text-gray-950">{value}</p>
-      <h3 className="mt-2 text-sm font-semibold text-gray-700">{label}</h3>
+      <h3 className="mt-2 flex items-center gap-1 text-sm font-semibold text-gray-700">
+        {label}
+        {hintTerm ? <HelpHint term={hintTerm} /> : null}
+      </h3>
       {helperText ? <p className="mt-1 text-xs text-gray-500">{helperText}</p> : null}
     </article>
   );

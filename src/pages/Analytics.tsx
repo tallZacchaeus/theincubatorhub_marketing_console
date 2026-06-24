@@ -27,6 +27,7 @@ import { campaignAnalytics } from '@/api/endpoints/analytics';
 import { listBroadcasts } from '@/api/endpoints/broadcasts';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
+import HelpHint from '@/components/HelpHint';
 import MetricCard, { type MetricTone } from '@/components/MetricCard';
 import PageHeader from '@/components/layout/PageHeader';
 import { linkTypeLabel } from '@/content/linkTypes';
@@ -104,13 +105,13 @@ export default function Analytics() {
     ? ([
         { icon: Users, tone: 'green', value: data.summary.recipients, label: 'Recipients', helper: 'In the audience' },
         { icon: Send, tone: 'blue', value: data.summary.sent, label: 'Sent', helper: 'Emails dispatched' },
-        { icon: CheckCircle2, tone: 'teal', value: data.summary.delivered, label: 'Delivered', helper: `${pct(data.summary.delivery_rate)} delivery rate` },
-        { icon: Target, tone: 'purple', value: data.summary.opened, label: 'Opened', helper: `${pct(data.summary.open_rate)} open rate` },
-        { icon: MousePointerClick, tone: 'green', value: data.summary.clicked, label: 'Clicked', helper: `${pct(data.summary.click_rate)} click rate` },
-        { icon: MailX, tone: 'orange', value: data.summary.bounced, label: 'Bounced', helper: "Couldn't be delivered" },
-        { icon: AlertTriangle, tone: 'pink', value: data.summary.complained, label: 'Complaints', helper: 'Marked as spam' },
-        { icon: UserMinus, tone: 'blue', value: data.summary.unsubscribed, label: 'Unsubscribed', helper: 'Opted out' },
-      ] as { icon: typeof Users; tone: MetricTone; value: number; label: string; helper: string }[])
+        { icon: CheckCircle2, tone: 'teal', value: data.summary.delivered, label: 'Delivered', helper: `${pct(data.summary.delivery_rate)} delivery rate`, hint: 'delivery-rate' },
+        { icon: Target, tone: 'purple', value: data.summary.opened, label: 'Opened', helper: `${pct(data.summary.open_rate)} open rate`, hint: 'open-rate' },
+        { icon: MousePointerClick, tone: 'green', value: data.summary.clicked, label: 'Clicked', helper: `${pct(data.summary.click_rate)} click rate`, hint: 'click-rate' },
+        { icon: MailX, tone: 'orange', value: data.summary.bounced, label: 'Bounced', helper: "Couldn't be delivered", hint: 'bounce' },
+        { icon: AlertTriangle, tone: 'pink', value: data.summary.complained, label: 'Complaints', helper: 'Marked as spam', hint: 'complaint' },
+        { icon: UserMinus, tone: 'blue', value: data.summary.unsubscribed, label: 'Unsubscribed', helper: 'Opted out', hint: 'unsubscribe' },
+      ] as { icon: typeof Users; tone: MetricTone; value: number; label: string; helper: string; hint?: string }[])
     : [];
 
   const chartData =
@@ -188,13 +189,17 @@ export default function Analytics() {
                   value={t.value.toLocaleString()}
                   label={t.label}
                   helperText={t.helper}
+                  hintTerm={t.hint}
                 />
               ))}
             </section>
 
             {/* Conversions / ROI */}
             <section className="space-y-3">
-              <h2 className="text-sm font-semibold text-gray-700">Conversions &amp; ROI</h2>
+              <h2 className="flex items-center gap-1 text-sm font-semibold text-gray-700">
+                Conversions &amp; ROI
+                <HelpHint term="conversion" />
+              </h2>
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <Card className="p-6">
                   <div className="text-3xl font-bold tracking-tight text-gray-950">
@@ -220,8 +225,9 @@ export default function Analytics() {
 
             {/* Per-link breakdown */}
             <section className="space-y-3">
-              <h2 className="text-sm font-semibold text-gray-700">
+              <h2 className="flex items-center gap-1 text-sm font-semibold text-gray-700">
                 Per-link breakdown — which links performed best
+                <HelpHint term="tracked-link" />
               </h2>
               {data.links.length === 0 ? (
                 <Card className="px-6 py-10 text-center text-sm text-gray-500">

@@ -2,6 +2,7 @@ import { HelpCircle, Mail, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '@/api/client';
 import { useAuth } from '@/auth/AuthContext';
+import HelpHint from '@/components/HelpHint';
 import PageHeader from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -52,10 +53,12 @@ export default function Settings() {
             </p>
             <div className="flex items-start gap-2 rounded-xl bg-green-50 px-3 py-2.5 text-green-800">
               <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-              <p>
-                Every send automatically respects <strong>consent</strong> and the{' '}
-                <strong>do-not-email (suppression) list</strong> — unsubscribed, bounced, and complained
-                addresses are skipped, so you can't accidentally email someone who opted out.
+              <p className="inline-flex flex-wrap items-center gap-1">
+                Every send automatically respects <strong>consent</strong>
+                <HelpHint term="consent" /> and the{' '}
+                <strong>do-not-email (suppression) list</strong>
+                <HelpHint term="suppression" /> — unsubscribed, bounced, and complained addresses are
+                skipped, so you can't accidentally email someone who opted out.
               </p>
             </div>
             <p className="text-gray-500">
