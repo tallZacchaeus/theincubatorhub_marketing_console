@@ -263,7 +263,7 @@ export default function CampaignDetail() {
               <thead>
                 <tr className="border-b border-gray-200">
                   {['Label', 'Type', 'Destination', 'Tracked URL', 'Clicks', ''].map((h) => (
-                    <th key={h} className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-gray-400">
+                    <th key={h} className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-gray-500">
                       {h}
                     </th>
                   ))}
@@ -397,7 +397,7 @@ export default function CampaignDetail() {
         {/* Preview pane */}
         {preview ? (
           <Card className="p-6">
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">Preview</div>
+            <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">Preview</div>
             <div className="text-xs text-gray-500">Subject</div>
             <div className="mb-3 font-semibold text-gray-900">{preview.subject}</div>
             <hr className="mb-3 border-gray-200" />

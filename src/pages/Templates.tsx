@@ -233,7 +233,7 @@ export default function Templates() {
 
           {/* Live preview */}
           <Card className="p-6">
-            <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
+            <div className="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-500">
               Preview (sample recipient)
             </div>
             {preview ? (

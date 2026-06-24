@@ -82,7 +82,16 @@ export default function DataTable<TData>({
                   return (
                     <th
                       key={header.id}
-                      className="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-gray-400"
+                      aria-sort={
+                        canSort
+                          ? sorted === 'asc'
+                            ? 'ascending'
+                            : sorted === 'desc'
+                              ? 'descending'
+                              : 'none'
+                          : undefined
+                      }
+                      className="px-6 py-3 text-xs font-semibold uppercase tracking-wide text-gray-500"
                     >
                       {header.isPlaceholder ? null : canSort ? (
                         <button
