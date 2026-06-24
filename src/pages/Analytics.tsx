@@ -29,7 +29,10 @@ import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import HelpHint from '@/components/HelpHint';
 import MetricCard, { type MetricTone } from '@/components/MetricCard';
+import CountUp from '@/components/motion/CountUp';
+import Reveal from '@/components/motion/Reveal';
 import PageHeader from '@/components/layout/PageHeader';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { linkTypeLabel } from '@/content/linkTypes';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
@@ -83,6 +86,7 @@ const linkColumns: ColumnDef<LinkRow, unknown>[] = [
 ];
 
 export default function Analytics() {
+  const reduced = useReducedMotion();
   const broadcastsQuery = useQuery({
     queryKey: ['broadcasts', 'list'],
     queryFn: () => listBroadcasts({ limit: 50 }),
@@ -147,7 +151,7 @@ export default function Analytics() {
         }
       />
 
-      <div className="space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="space-y-8 px-4 py-6 sm:px-6 lg:px-8">
         {broadcastsQuery.error ? (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {apiErrorMessage(broadcastsQuery.error)}
@@ -186,7 +190,7 @@ export default function Analytics() {
                   key={t.label}
                   icon={t.icon}
                   tone={t.tone}
-                  value={t.value.toLocaleString()}
+                  value={<CountUp value={t.value} />}
                   label={t.label}
                   helperText={t.helper}
                   hintTerm={t.hint}
@@ -203,7 +207,7 @@ export default function Analytics() {
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
                 <Card className="p-6">
                   <div className="text-3xl font-bold tracking-tight text-gray-950">
-                    {data.conversions.count.toLocaleString()}
+                    <CountUp value={data.conversions.count} />
                   </div>
                   <div className="mt-1 text-sm font-semibold text-gray-700">Conversions</div>
                   <p className="mt-1 text-xs text-gray-500">Signups attributed to this campaign</p>
@@ -248,8 +252,8 @@ export default function Analytics() {
                             cursor={{ fill: 'rgba(22,163,74,0.06)' }}
                           />
                           <Legend wrapperStyle={{ fontSize: 12 }} />
-                          <Bar dataKey="clicks" name="Clicks" fill="#16a34a" radius={[4, 4, 0, 0]} />
-                          <Bar dataKey="conversions" name="Conversions" fill="#60a5fa" radius={[4, 4, 0, 0]} />
+                          <Bar dataKey="clicks" name="Clicks" fill="#16a34a" radius={[4, 4, 0, 0]} isAnimationActive={!reduced} animationDuration={700} />
+                          <Bar dataKey="conversions" name="Conversions" fill="#60a5fa" radius={[4, 4, 0, 0]} isAnimationActive={!reduced} animationDuration={700} />
                         </BarChart>
                       </ResponsiveContainer>
                     </div>
@@ -263,7 +267,7 @@ export default function Analytics() {
             </section>
           </>
         ) : null}
-      </div>
+      </Reveal>
     </>
   );
 }

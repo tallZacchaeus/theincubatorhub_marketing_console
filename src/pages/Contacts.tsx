@@ -19,6 +19,7 @@ import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
+import Reveal from '@/components/motion/Reveal';
 import PageHeader from '@/components/layout/PageHeader';
 import { CheckboxField, TextField } from '@/components/form/fields';
 import { applyApiErrors } from '@/components/form/applyApiErrors';
@@ -233,7 +234,7 @@ export default function Contacts() {
         }
       />
 
-      <div className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
         {/* Toolbar */}
         <div className="flex flex-wrap items-center gap-3">
           <div className="relative w-full max-w-xs">
@@ -301,7 +302,7 @@ export default function Contacts() {
             onPageChange: setOffset,
           }}
         />
-      </div>
+      </Reveal>
 
       {/* Add contact dialog */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>

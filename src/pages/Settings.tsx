@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '@/api/client';
 import { useAuth } from '@/auth/AuthContext';
 import HelpHint from '@/components/HelpHint';
+import Reveal from '@/components/motion/Reveal';
 import PageHeader from '@/components/layout/PageHeader';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,7 +24,7 @@ export default function Settings() {
     <>
       <PageHeader title="Settings" subtitle="Sending setup, unsubscribes, and your account." />
 
-      <div className="max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="max-w-3xl space-y-6 px-4 py-6 sm:px-6 lg:px-8">
         {/* Account */}
         <Card>
           <CardHeader>
@@ -96,7 +97,7 @@ export default function Settings() {
             </span>
           </span>
         </Link>
-      </div>
+      </Reveal>
     </>
   );
 }

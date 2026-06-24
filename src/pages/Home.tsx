@@ -9,6 +9,8 @@ import { useAuth } from '@/auth/AuthContext';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import MetricCard from '@/components/MetricCard';
+import CountUp from '@/components/motion/CountUp';
+import Reveal from '@/components/motion/Reveal';
 import { useTour } from '@/components/tour/useTour';
 import StatusBadge from '@/components/StatusBadge';
 import PageHeader from '@/components/layout/PageHeader';
@@ -83,7 +85,7 @@ export default function Home() {
         }
       />
 
-      <div className="space-y-8 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="space-y-8 px-4 py-6 sm:px-6 lg:px-8">
         {error ? (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {apiErrorMessage(error)}
@@ -101,7 +103,7 @@ export default function Home() {
                   key={m.label}
                   icon={m.icon}
                   tone={m.tone}
-                  value={m.value}
+                  value={<CountUp value={m.value} />}
                   label={m.label}
                   helperText={m.helper}
                 />
@@ -137,7 +139,7 @@ export default function Home() {
             }
           />
         </section>
-      </div>
+      </Reveal>
     </>
   );
 }

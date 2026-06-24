@@ -15,6 +15,7 @@ import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
+import Reveal from '@/components/motion/Reveal';
 import PageHeader from '@/components/layout/PageHeader';
 import { SelectField, TextField, type SelectOption } from '@/components/form/fields';
 import { applyApiErrors } from '@/components/form/applyApiErrors';
@@ -170,7 +171,7 @@ export default function Campaigns() {
         }
       />
 
-      <div className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
         {error ? (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {apiErrorMessage(error)}
@@ -196,7 +197,7 @@ export default function Campaigns() {
             />
           }
         />
-      </div>
+      </Reveal>
 
       {/* New campaign dialog */}
       <Dialog open={showCreate} onOpenChange={setShowCreate}>

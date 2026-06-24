@@ -4,6 +4,7 @@ import { createRoot } from 'react-dom/client';
 import App from '@/App';
 import { AuthProvider } from '@/auth/AuthContext';
 import { queryClient } from '@/lib/queryClient';
+import '@/lib/gsap'; // register GSAP plugins (useGSAP, Flip)
 import '@/index.css';
 
 const rootElement = document.getElementById('root');

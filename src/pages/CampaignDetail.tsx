@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
@@ -28,7 +28,10 @@ import { createLink, deleteLink, listLinks } from '@/api/endpoints/links';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import HelpHint from '@/components/HelpHint';
 import StatusBadge from '@/components/StatusBadge';
+import SuccessCelebration from '@/components/motion/SuccessCelebration';
 import PageHeader from '@/components/layout/PageHeader';
+import { Flip, gsap, useGSAP } from '@/lib/gsap';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { SelectField, TextField } from '@/components/form/fields';
 import { applyApiErrors } from '@/components/form/applyApiErrors';
 import { LINK_TYPE_OPTIONS, linkTypeLabel } from '@/content/linkTypes';
@@ -77,6 +80,29 @@ export default function CampaignDetail() {
   const [preview, setPreview] = useState<CampaignPreview | null>(null);
   const [scheduleAt, setScheduleAt] = useState('');
   const [confirmSend, setConfirmSend] = useState(false);
+  const [cueOpen, setCueOpen] = useState(false);
+
+  // GSAP Flip for the tracked-links list (add/remove ease in/out).
+  const reduced = useReducedMotion();
+  const linksFlipRef = useRef<ReturnType<typeof Flip.getState> | null>(null);
+  function captureLinksFlip() {
+    if (reduced) return;
+    linksFlipRef.current = Flip.getState('[data-flip-link]');
+  }
+  useGSAP(
+    () => {
+      if (!linksFlipRef.current || reduced) return;
+      Flip.from(linksFlipRef.current, {
+        duration: 0.4,
+        ease: 'power2.out',
+        absolute: true,
+        onEnter: (els) => gsap.fromTo(els, { opacity: 0, scale: 0.96 }, { opacity: 1, scale: 1, duration: 0.3 }),
+        onLeave: (els) => gsap.to(els, { opacity: 0, scale: 0.96, duration: 0.2 }),
+      });
+      linksFlipRef.current = null;
+    },
+    { dependencies: [links] },
+  );
 
   function refresh() {
     void queryClient.invalidateQueries({ queryKey: ['broadcast', id] });
@@ -141,7 +167,10 @@ export default function CampaignDetail() {
   });
   const testSendMut = useMutation({
     mutationFn: () => testSendBroadcast(id),
-    onSuccess: ({ sent_to }) => toast.success('Test email sent', `Sent to ${sent_to}`),
+    onSuccess: ({ sent_to }) => {
+      toast.success('Test email sent', `Sent to ${sent_to}`);
+      setCueOpen(true);
+    },
     onError: (e) => toast.error(e),
   });
   const scheduleMut = useMutation({
@@ -157,6 +186,7 @@ export default function CampaignDetail() {
     onSuccess: () => {
       toast.success('Campaign send dispatched');
       setConfirmSend(false);
+      setCueOpen(true);
       refresh();
     },
     onError: (e) => toast.error(e),
@@ -254,7 +284,7 @@ export default function CampaignDetail() {
                   </tr>
                 ) : (
                   links.map((l) => (
-                    <tr key={l.id} className="border-b border-gray-100 last:border-0">
+                    <tr key={l.id} data-flip-link className="border-b border-gray-100 last:border-0">
                       <td className="px-4 py-3 text-gray-700">{l.label ?? '—'}</td>
                       <td className="px-4 py-3">
                         <Badge variant="gray">{linkTypeLabel(l.link_type)}</Badge>
@@ -272,7 +302,10 @@ export default function CampaignDetail() {
                           size="icon"
                           className="h-8 w-8 text-red-600 hover:bg-red-50 hover:text-red-700"
                           aria-label="Remove link"
-                          onClick={() => deleteLinkMut.mutate(l.id)}
+                          onClick={() => {
+                            captureLinksFlip();
+                            deleteLinkMut.mutate(l.id);
+                          }}
                         >
                           <Trash2 className="h-4 w-4" />
                         </Button>
@@ -287,7 +320,10 @@ export default function CampaignDetail() {
           {/* Add link */}
           <Form {...linkForm}>
             <form
-              onSubmit={linkForm.handleSubmit((v) => addLinkMut.mutate(v))}
+              onSubmit={linkForm.handleSubmit((v) => {
+                captureLinksFlip();
+                addLinkMut.mutate(v);
+              })}
               className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
               <TextField name="destination_url" label="Destination URL" placeholder="https://incubatorhub.com/apply" />
@@ -389,6 +425,8 @@ export default function CampaignDetail() {
         busy={sendMut.isPending}
         onConfirm={() => sendMut.mutate()}
       />
+
+      <SuccessCelebration open={cueOpen} onDone={() => setCueOpen(false)} />
     </>
   );
 }

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import HelpHint from '@/components/HelpHint';
 import { cn } from '@/lib/utils';
@@ -30,7 +31,7 @@ export default function MetricCard({
   hintTerm,
 }: {
   icon: LucideIcon;
-  value: string | number;
+  value: ReactNode;
   label: string;
   helperText?: string;
   tone?: MetricTone;

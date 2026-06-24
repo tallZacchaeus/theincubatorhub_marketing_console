@@ -14,6 +14,7 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import DataTable from '@/components/DataTable';
 import EmptyState from '@/components/EmptyState';
 import HelpHint from '@/components/HelpHint';
+import Reveal from '@/components/motion/Reveal';
 import PageHeader from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -268,7 +269,7 @@ export default function Templates() {
           </Button>
         }
       />
-      <div className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
+      <Reveal className="space-y-4 px-4 py-6 sm:px-6 lg:px-8">
         {error ? (
           <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {apiErrorMessage(error)}
@@ -292,7 +293,7 @@ export default function Templates() {
             />
           }
         />
-      </div>
+      </Reveal>
 
       <ConfirmDialog
         open={toDelete !== null}

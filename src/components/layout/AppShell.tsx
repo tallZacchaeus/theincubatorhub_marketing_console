@@ -99,8 +99,14 @@ export default function AppShell() {
                   )}
                 </button>
 
-                {isOpen && (
-                  <div className="ml-6 mt-1 space-y-1">
+                {/* Smooth expand/collapse via CSS grid rows (reduced-motion net makes it instant). */}
+                <div
+                  className={cn(
+                    'grid transition-[grid-template-rows,opacity] duration-200 ease-out',
+                    isOpen ? 'mt-1 grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+                  )}
+                >
+                  <div className="ml-6 space-y-1 overflow-hidden">
                     {section.items.map((item) => {
                       const ItemIcon = item.icon;
                       const itemActive = isItemActive(item.path, location.pathname);
@@ -108,23 +114,32 @@ export default function AppShell() {
                         <button
                           key={item.path}
                           type="button"
+                          tabIndex={isOpen ? 0 : -1}
                           aria-current={itemActive ? 'page' : undefined}
                           data-tour={item.path === '/analytics' ? 'nav-analytics' : undefined}
                           className={cn(
-                            'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+                            'relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm transition focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
                             itemActive
                               ? 'bg-green-50 font-semibold text-green-700'
                               : 'text-gray-600 hover:bg-gray-50 hover:text-gray-950',
                           )}
                           onClick={() => navigate(item.path)}
                         >
+                          {/* Animated active accent. */}
+                          <span
+                            className={cn(
+                              'absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 rounded-full bg-green-600 transition-all duration-200',
+                              itemActive ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0',
+                            )}
+                            aria-hidden="true"
+                          />
                           <ItemIcon className="h-4 w-4 shrink-0" aria-hidden="true" />
                           <span className="truncate">{item.label}</span>
                         </button>
                       );
                     })}
                   </div>
-                )}
+                </div>
               </div>
             );
           })}

@@ -56,4 +56,45 @@
   .bg-brand-gradient {
     @apply bg-gradient-to-br from-green-500 to-emerald-600;
   }
+
+  /* Shimmer skeleton (Phase G). A moving highlight over the muted base. */
+  .skeleton-shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .skeleton-shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
+    animation: skeleton-shimmer 1.5s infinite;
+  }
+  @keyframes skeleton-shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+}
+
+/*
+ * Centralised reduced-motion safety net: when the user prefers reduced motion,
+ * force every CSS animation/transition to near-instant. GSAP animations are
+ * gated separately via useReducedMotion(). Together these guarantee the whole
+ * app degrades to final-state with no motion.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
