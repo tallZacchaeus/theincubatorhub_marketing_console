@@ -4,10 +4,13 @@ Standalone admin SPA for The Incubator's marketing campaigns. Deployed to its ow
 subdomain (e.g. `marketing.theincubatorhub.com`) and **shares the admin session**
 with the main app via the shared Laravel API + a parent-domain session cookie.
 
-- **Stack:** Vue 3 + Vite + TypeScript + vue-router. Plain CSS (no UI framework).
-- **Auth:** Sanctum stateful-cookie flow (`src/api/client.ts`), gated on
-  `role === 'admin'` (`src/router`, `src/stores/auth.ts`). One login shared with
-  the main app once `SESSION_DOMAIN` spans the apex.
+- **Stack:** React 18 + Vite + TypeScript + Tailwind CSS 3 + shadcn/ui +
+  `lucide-react`. Inter type and a green/ink theme that matches the main app
+  admin (`theincubator_frontend`).
+- **Auth:** Sanctum stateful-cookie flow gated on `role === 'admin'`. One login
+  shared with the main app once `SESSION_DOMAIN` spans the apex. *(Ported into the
+  React data layer in Phase B — the original Vue implementation is preserved under
+  `legacy-vue/` as the functional spec.)*
 
 ## Develop
 
@@ -27,6 +30,11 @@ npm run build          # type-check + production build to dist/
 
 ## Status
 
-Phase 9 — shell + shared-session auth + empty routed pages (Dashboard, Contacts,
-Categories, Templates, Campaigns, Analytics, Settings). Pages are implemented
-against the console APIs in Phase 10.
+**Phase A (React rebuild) — scaffold + theme.** Vite + React + TS app with
+Tailwind + shadcn initialised and themed to the main-app tokens (see
+`src/index.css` for the CSS variables and `tailwind.config.ts`). `/` renders a
+throwaway style-preview page proving visual parity; it is replaced by the real
+shell and pages in later phases.
+
+The previous Vue console (the functional spec for the API + auth + page
+behaviour) is preserved under `legacy-vue/`.

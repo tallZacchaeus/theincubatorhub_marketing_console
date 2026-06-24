@@ -1,14 +1,14 @@
-import { fileURLToPath, URL } from 'node:url';
-import vue from '@vitejs/plugin-vue';
+import path from 'node:path';
+import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 
-// Standalone marketing console SPA. Talks to the shared Laravel API over the
-// Sanctum stateful-cookie flow (see src/api/client.ts). Runtime API host comes
-// from VITE_API_BASE_URL.
+// Standalone marketing console SPA (React). Talks to the shared Laravel API over
+// the Sanctum stateful-cookie flow (ported in a later phase). Runtime API host
+// comes from VITE_API_BASE_URL. Dev server runs on 5174 to match the prior setup.
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [react()],
   resolve: {
-    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+    alias: { '@': path.resolve(__dirname, './src') },
   },
   server: { port: 5174 },
 });

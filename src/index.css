@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * shadcn/ui CSS variables themed to the main app (theincubator_frontend) tokens.
+ * Values are HSL channels (no hsl() wrapper) so Tailwind can compose them with
+ * opacity modifiers. Hex equivalents noted for traceability.
+ */
+@layer base {
+  :root {
+    --background: 210 33% 97%; /* #f5f7fa app background */
+    --foreground: 222 47% 11%; /* #111827 ink */
+
+    --card: 0 0% 100%; /* #ffffff surfaces */
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    --primary: 142 71% 36%; /* #16a34a brand green */
+    --primary-foreground: 0 0% 100%; /* white on green */
+
+    --secondary: 220 14% 96%; /* #f3f4f6 gray-100 */
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 220 14% 96%; /* #f3f4f6 */
+    --muted-foreground: 220 9% 46%; /* #6b7280 gray-500 */
+
+    --accent: 138 76% 97%; /* #f0fdf4 soft green (active nav/chips) */
+    --accent-foreground: 142 72% 29%; /* #15803d on soft green */
+
+    --destructive: 0 72% 51%; /* #dc2626 red-600 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%; /* #e5e7eb gray-200 hairlines */
+    --input: 220 13% 91%;
+    --ring: 142 71% 36%; /* green focus ring */
+
+    --radius: 0.5rem; /* base; cards use rounded-2xl explicitly */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: 'cv11', 'ss01';
+    font-variation-settings: 'opsz' 32;
+  }
+}
+
+@layer components {
+  /* Brand gradient used for avatars/hero accents (matches the main app). */
+  .bg-brand-gradient {
+    @apply bg-gradient-to-br from-green-500 to-emerald-600;
+  }
+}
