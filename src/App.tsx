@@ -12,6 +12,9 @@ import Links from '@/pages/Links';
 import Login from '@/pages/Login';
 import Settings from '@/pages/Settings';
 import Templates from '@/pages/Templates';
+import ReportsOverview from '@/pages/reports/Overview';
+import ReportsRegistration from '@/pages/reports/Registration';
+import ReportsOnboarding from '@/pages/reports/Onboarding';
 import ComponentsShowcase from '@/pages/dev/ComponentsShowcase';
 
 /*
@@ -31,6 +34,10 @@ export default function App() {
         <Route element={<RequireRole roles={['admin']} />}>
           <Route element={<AppShell />}>
             <Route path="/" element={<Home />} />
+            <Route path="/reports" element={<Navigate to="/reports/overview" replace />} />
+            <Route path="/reports/overview" element={<ReportsOverview />} />
+            <Route path="/reports/registration" element={<ReportsRegistration />} />
+            <Route path="/reports/onboarding" element={<ReportsOnboarding />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/audiences" element={<Audiences />} />
             <Route path="/templates" element={<Templates />} />

@@ -2,6 +2,7 @@ import {
   BarChart3,
   HelpCircle,
   LayoutDashboard,
+  LineChart,
   Link2,
   Mail,
   Megaphone,
@@ -9,6 +10,7 @@ import {
   Settings,
   Target,
   UserCircle,
+  UserPlus,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -43,6 +45,31 @@ export interface NavSection {
  * its title band (see pageMetaFor).
  */
 export const navSections: NavSection[] = [
+  {
+    id: 'reports',
+    label: 'Reports',
+    icon: LineChart,
+    items: [
+      {
+        label: 'Overview',
+        path: '/reports/overview',
+        icon: BarChart3,
+        explainer: 'Registration, onboarding, and learning at a glance for the chosen period.',
+      },
+      {
+        label: 'Registration',
+        path: '/reports/registration',
+        icon: UserPlus,
+        explainer: "Who's signing up, from where, and whether they verify.",
+      },
+      {
+        label: 'Onboarding',
+        path: '/reports/onboarding',
+        icon: Target,
+        explainer: 'Where people drop off between signup and enrolment, and how long each stage takes.',
+      },
+    ],
+  },
   {
     id: 'campaigns',
     label: 'Campaigns',

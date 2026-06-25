@@ -1,3 +1,62 @@
+// --- Admin analytics reports (Phase 3/4) ---
+export interface ReportRange {
+  from: string;
+  to: string;
+}
+export interface ReportKpi {
+  id: string;
+  label: string;
+  value: number;
+  delta: { previous: number; change_pct: number | null } | null;
+}
+export interface DemographicRow {
+  label: string;
+  value: number;
+  percentage: number;
+}
+export interface ReportOverview {
+  range: ReportRange;
+  kpis: ReportKpi[];
+  funnel: { name: string; value: number }[];
+  generated_at: string;
+}
+export interface ReportRegistration {
+  range: ReportRange;
+  granularity: string;
+  totals: { signups: number; verified: number; verification_rate: number };
+  series: { date: string; value: number; secondary: number }[];
+  by_source: { source: string; signups: number; conversions: number }[];
+  by_programme: { label: string; value: number }[];
+  demographics: { gender: DemographicRow[]; age: DemographicRow[]; top_countries: DemographicRow[] };
+  generated_at: string;
+}
+export interface ReportOnboarding {
+  range: ReportRange;
+  funnel: {
+    name: string;
+    value: number;
+    pct_of_accounts: number;
+    step_conversion: number | null;
+    dropoff: number | null;
+  }[];
+  time_to_stage: { transition: string; count: number; median_hours: number; p90_hours: number }[];
+  quiz: {
+    generated: number;
+    submitted: number;
+    completed: number;
+    fallback_rate: number;
+    laptop_access: { yes: number; no: number; sometimes: number };
+  };
+  recommendation_acceptance_rate: number | null;
+  generated_at: string;
+}
+
+export interface ReportParams {
+  from?: string;
+  to?: string;
+  granularity?: 'day' | 'week' | 'month';
+}
+
 export interface PageMeta {
   total: number;
   limit: number;

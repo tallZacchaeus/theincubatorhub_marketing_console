@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { LucideIcon } from 'lucide-react';
+import { ArrowDown, ArrowUp, type LucideIcon } from 'lucide-react';
 import HelpHint from '@/components/HelpHint';
 import { cn } from '@/lib/utils';
 
@@ -29,6 +29,7 @@ export default function MetricCard({
   tone = 'green',
   className,
   hintTerm,
+  delta,
 }: {
   icon: LucideIcon;
   value: ReactNode;
@@ -38,8 +39,12 @@ export default function MetricCard({
   className?: string;
   /** Optional glossary term id; renders a HelpHint next to the label. */
   hintTerm?: string;
+  /** Optional period-over-period change; renders a ▲/▼ chip under the value. */
+  delta?: { changePct: number | null } | null;
 }) {
   const t = TONES[tone];
+  const change = delta?.changePct;
+  const up = typeof change === 'number' && change >= 0;
   return (
     <article
       className={cn(
@@ -53,7 +58,20 @@ export default function MetricCard({
           <Icon className="h-6 w-6" aria-hidden="true" />
         </div>
       </div>
-      <p className="text-3xl font-bold tracking-tight text-gray-950">{value}</p>
+      <div className="flex items-baseline gap-2">
+        <p className="text-3xl font-bold tracking-tight text-gray-950">{value}</p>
+        {typeof change === 'number' ? (
+          <span
+            className={cn(
+              'inline-flex items-center gap-0.5 text-xs font-medium',
+              up ? 'text-green-700' : 'text-red-600',
+            )}
+          >
+            {up ? <ArrowUp className="h-3 w-3" aria-hidden="true" /> : <ArrowDown className="h-3 w-3" aria-hidden="true" />}
+            {Math.abs(change)}%
+          </span>
+        ) : null}
+      </div>
       <h3 className="mt-2 flex items-center gap-1 text-sm font-semibold text-gray-700">
         {label}
         {hintTerm ? <HelpHint term={hintTerm} /> : null}
