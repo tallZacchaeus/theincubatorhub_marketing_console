@@ -1,8 +1,9 @@
-# Incubator Marketing Console
+# Incubator Admin Analytics & Marketing Console
 
-Standalone admin SPA for The Incubator's marketing campaigns. Deployed to its own
-subdomain (e.g. `marketing.theincubatorhub.com`) and **shares the admin session**
-with the main app via the shared Laravel API + a parent-domain session cookie.
+Standalone admin SPA for The Incubator — analytics/reporting, marketing campaigns,
+and daily operations. Deployed to its own subdomain (e.g.
+`analytics.theincubatorhub.com`) and **shares the admin session** with the main
+app via the shared Laravel API + a parent-domain session cookie.
 
 This is a **React rebuild** of the original Vue console — same backend, same API
 contract, redesigned to match the main app admin and to be usable by a

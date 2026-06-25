@@ -1,9 +1,9 @@
 {
-  "name": "incubator-marketing-console",
+  "name": "incubator-analytics-console",
   "private": true,
   "version": "0.1.0",
   "type": "module",
-  "description": "Standalone admin console for The Incubator marketing campaigns (separate React SPA on marketing.theincubatorhub.com, shares the admin session).",
+  "description": "Standalone Admin Analytics & Marketing Console for The Incubator — reports, marketing, and daily operations (separate React SPA on analytics.theincubatorhub.com, shares the admin session).",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
