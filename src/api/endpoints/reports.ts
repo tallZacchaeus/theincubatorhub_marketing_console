@@ -1,5 +1,11 @@
 import { apiClient } from '@/api/client';
-import type { ReportOnboarding, ReportOverview, ReportParams, ReportRegistration } from '@/types';
+import type {
+  ReportLearning,
+  ReportOnboarding,
+  ReportOverview,
+  ReportParams,
+  ReportRegistration,
+} from '@/types';
 
 const BASE = '/api/admin/reports';
 
@@ -15,5 +21,10 @@ export async function reportRegistration(params: ReportParams = {}): Promise<Rep
 
 export async function reportOnboarding(params: ReportParams = {}): Promise<ReportOnboarding> {
   const { data } = await apiClient.get(`${BASE}/onboarding`, { params });
+  return data.data;
+}
+
+export async function reportLearning(params: ReportParams = {}): Promise<ReportLearning> {
+  const { data } = await apiClient.get(`${BASE}/learning`, { params });
   return data.data;
 }

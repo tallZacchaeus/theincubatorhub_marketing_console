@@ -51,6 +51,26 @@ export interface ReportOnboarding {
   generated_at: string;
 }
 
+export interface ReportLearning {
+  range: ReportRange;
+  enrolments_by_status: Record<string, number>;
+  by_programme: { label: string; value: number }[];
+  cohort_health: {
+    cohort_id: number;
+    name: string;
+    status: string;
+    capacity: number | null;
+    seats_taken: number;
+    fill_rate: number | null;
+    active: number;
+    completed: number;
+  }[];
+  attendance: { overall_rate: number; sessions_recorded: number; by_cohort: { label: string; value: number }[] };
+  completion: { completed: number; completion_rate: number; median_days_to_complete: number };
+  certificates: { total_issued: number; revoked: number; series: { date: string; value: number }[] };
+  generated_at: string;
+}
+
 export interface ReportParams {
   from?: string;
   to?: string;

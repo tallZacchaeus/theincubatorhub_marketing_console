@@ -15,6 +15,7 @@ import Templates from '@/pages/Templates';
 import ReportsOverview from '@/pages/reports/Overview';
 import ReportsRegistration from '@/pages/reports/Registration';
 import ReportsOnboarding from '@/pages/reports/Onboarding';
+import ReportsLearning from '@/pages/reports/Learning';
 import ComponentsShowcase from '@/pages/dev/ComponentsShowcase';
 
 /*
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="/reports/overview" element={<ReportsOverview />} />
             <Route path="/reports/registration" element={<ReportsRegistration />} />
             <Route path="/reports/onboarding" element={<ReportsOnboarding />} />
+            <Route path="/reports/learning" element={<ReportsLearning />} />
             <Route path="/contacts" element={<Contacts />} />
             <Route path="/audiences" element={<Audiences />} />
             <Route path="/templates" element={<Templates />} />

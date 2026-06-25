@@ -1,6 +1,7 @@
 import {
   BarChart3,
   HelpCircle,
+  GraduationCap,
   LayoutDashboard,
   LineChart,
   Link2,
@@ -67,6 +68,12 @@ export const navSections: NavSection[] = [
         path: '/reports/onboarding',
         icon: Target,
         explainer: 'Where people drop off between signup and enrolment, and how long each stage takes.',
+      },
+      {
+        label: 'Learning',
+        path: '/reports/learning',
+        icon: GraduationCap,
+        explainer: 'Are enrolled students showing up and finishing?',
       },
     ],
   },
