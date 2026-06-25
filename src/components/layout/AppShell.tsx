@@ -19,8 +19,9 @@ import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import {
   isItemActive,
-  navSections,
   sectionIdForPath,
+  visibleSections,
+  type NavRole,
   type NavSection,
 } from '@/components/layout/navigation';
 import { cn } from '@/lib/utils';
@@ -45,9 +46,12 @@ export default function AppShell() {
   const { user, logout } = useAuth();
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  // Sections visible to the signed-in user's role (admin sees all; agents will
+  // see Operations once it lands).
+  const sections = visibleSections(user?.role as NavRole | undefined);
   // All sections expanded by default (like the main app); the active section is
   // force-expanded on every route change.
-  const [expanded, setExpanded] = useState<string[]>(() => navSections.map((s) => s.id));
+  const [expanded, setExpanded] = useState<string[]>(() => sections.map((s) => s.id));
 
   useEffect(() => {
     const activeSection = sectionIdForPath(location.pathname);
@@ -71,7 +75,7 @@ export default function AppShell() {
     return (
       <nav className="flex-1 overflow-y-auto px-3 py-4" aria-label="Console navigation">
         <div className="space-y-1">
-          {navSections.map((section: NavSection) => {
+          {sections.map((section: NavSection) => {
             const sectionActive = section.items.some((item) =>
               isItemActive(item.path, location.pathname),
             );
@@ -191,7 +195,7 @@ export default function AppShell() {
               <LogoMark className="h-10 w-10" />
               <span>
                 <span className="block font-bold text-gray-950">Incubator Hub</span>
-                <span className="block text-xs font-medium text-gray-500">Marketing</span>
+                <span className="block text-xs font-medium text-gray-500">Analytics</span>
               </span>
             </button>
           </div>
@@ -226,7 +230,7 @@ export default function AppShell() {
             <LogoMark className="h-9 w-9" />
             <span>
               <span className="block text-sm font-bold text-gray-950">Incubator Hub</span>
-              <span className="block text-xs text-gray-500">Marketing</span>
+              <span className="block text-xs text-gray-500">Analytics</span>
             </span>
           </button>
           <button

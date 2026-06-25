@@ -1,15 +1,18 @@
 import { Loader2 } from 'lucide-react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuth } from '@/auth/AuthContext';
+import type { Role } from '@/auth/AuthContext';
 
 /*
- * Route guard. Until the initial rehydrate resolves we show a neutral loader so
- * we never flash the login screen for an already-signed-in admin. Non-admins
- * (including signed-out users) are bounced to /login with a ?redirect back to the
- * page they wanted.
+ * Role-aware route guard. Until the initial rehydrate resolves we show a neutral
+ * loader (so we never flash the login screen for a signed-in user). Users whose
+ * role isn't in `roles` are bounced to /login with a ?redirect back.
+ *
+ * Reports + Marketing use roles={['admin']}; Operations (Phase 6) will use
+ * roles={['admin','agent']}.
  */
-export default function RequireAdmin() {
-  const { ready, isAdmin } = useAuth();
+export default function RequireRole({ roles }: { roles: Role[] }) {
+  const { ready, user } = useAuth();
   const location = useLocation();
 
   if (!ready) {
@@ -20,7 +23,8 @@ export default function RequireAdmin() {
     );
   }
 
-  if (!isAdmin) {
+  const allowed = user !== null && roles.includes(user.role as Role);
+  if (!allowed) {
     const redirect = encodeURIComponent(`${location.pathname}${location.search}`);
     return <Navigate to={`/login?redirect=${redirect}`} replace />;
   }

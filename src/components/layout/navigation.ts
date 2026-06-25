@@ -13,6 +13,9 @@ import {
   type LucideIcon,
 } from 'lucide-react';
 
+/** Roles allowed to use the console (mirrors AuthContext Role). */
+export type NavRole = 'admin' | 'agent';
+
 export interface NavItem {
   /** Plain-language label shown in the sidebar. */
   label: string;
@@ -21,6 +24,8 @@ export interface NavItem {
   icon: LucideIcon;
   /** One-line page explainer, rendered as the title-band subtitle. */
   explainer: string;
+  /** Roles that may see this item. Defaults to admin-only. */
+  roles?: NavRole[];
 }
 
 export interface NavSection {
@@ -28,6 +33,8 @@ export interface NavSection {
   label: string;
   icon: LucideIcon;
   items: NavItem[];
+  /** Roles that may see this section. Defaults to admin-only. */
+  roles?: NavRole[];
 }
 
 /*
@@ -135,4 +142,19 @@ export function sectionIdForPath(pathname: string): string | undefined {
   return navSections.find((section) =>
     section.items.some((item) => isItemActive(item.path, pathname)),
   )?.id;
+}
+
+/**
+ * Sections (and their items) visible to a given role. Unspecified `roles` default
+ * to admin-only, so today every section shows for admins; agent-visible sections
+ * (Operations) opt in via `roles: ['admin','agent']` when they land.
+ */
+export function visibleSections(role: NavRole | undefined): NavSection[] {
+  if (!role) return [];
+  return navSections
+    .map((section) => ({
+      ...section,
+      items: section.items.filter((item) => (item.roles ?? ['admin']).includes(role)),
+    }))
+    .filter((section) => (section.roles ?? ['admin']).includes(role) && section.items.length > 0);
 }

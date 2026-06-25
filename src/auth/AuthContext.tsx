@@ -2,9 +2,14 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from '
 import type { AuthUser } from '@/api/auth';
 import { fetchMe, login as apiLogin, logout as apiLogout } from '@/api/auth';
 
+/** Roles that may use the console. Reports/Marketing are admin-only; Operations is staff. */
+export type Role = 'admin' | 'agent';
+
 interface AuthContextValue {
   user: AuthUser | null;
   isAdmin: boolean;
+  /** admin or agent — may access the console (Operations). */
+  isStaff: boolean;
   /** True once the initial session check (rehydrate) has resolved. */
   ready: boolean;
   login: (email: string, password: string) => Promise<AuthUser>;
@@ -66,6 +71,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const value: AuthContextValue = {
     user,
     isAdmin: user?.role === 'admin',
+    isStaff: user?.role === 'admin' || user?.role === 'agent',
     ready,
     login,
     logout,

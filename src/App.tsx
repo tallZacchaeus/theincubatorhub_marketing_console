@@ -1,5 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import RequireAdmin from '@/auth/RequireAdmin';
+import RequireRole from '@/auth/RequireRole';
 import AppShell from '@/components/layout/AppShell';
 import Analytics from '@/pages/Analytics';
 import Audiences from '@/pages/Audiences';
@@ -28,7 +28,7 @@ export default function App() {
         {import.meta.env.DEV && (
           <Route path="/dev/components" element={<ComponentsShowcase />} />
         )}
-        <Route element={<RequireAdmin />}>
+        <Route element={<RequireRole roles={['admin']} />}>
           <Route element={<AppShell />}>
             <Route path="/" element={<Home />} />
             <Route path="/contacts" element={<Contacts />} />
