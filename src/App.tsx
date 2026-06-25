@@ -10,6 +10,7 @@ import Help from '@/pages/Help';
 import Home from '@/pages/Home';
 import Links from '@/pages/Links';
 import Login from '@/pages/Login';
+import Operations from '@/pages/Operations';
 import Settings from '@/pages/Settings';
 import Templates from '@/pages/Templates';
 import ReportsOverview from '@/pages/reports/Overview';
@@ -49,6 +50,12 @@ export default function App() {
             <Route path="/analytics" element={<Analytics />} />
             <Route path="/settings" element={<Settings />} />
             <Route path="/help" element={<Help />} />
+          </Route>
+        </Route>
+        {/* Operations is staff-accessible (admin + agent). */}
+        <Route element={<RequireRole roles={['admin', 'agent']} />}>
+          <Route element={<AppShell />}>
+            <Route path="/operations" element={<Operations />} />
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

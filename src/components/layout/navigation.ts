@@ -1,5 +1,6 @@
 import {
   BarChart3,
+  ClipboardList,
   HelpCircle,
   GraduationCap,
   LayoutDashboard,
@@ -74,6 +75,21 @@ export const navSections: NavSection[] = [
         path: '/reports/learning',
         icon: GraduationCap,
         explainer: 'Are enrolled students showing up and finishing?',
+      },
+    ],
+  },
+  {
+    id: 'operations',
+    label: 'Operations',
+    icon: ClipboardList,
+    roles: ['admin', 'agent'],
+    items: [
+      {
+        label: 'Daily operations',
+        path: '/operations',
+        icon: ClipboardList,
+        explainer: 'Sprint funnel, daily targets, pace, and team activity.',
+        roles: ['admin', 'agent'],
       },
     ],
   },

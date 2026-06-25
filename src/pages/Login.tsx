@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input';
  * authenticates is immediately logged back out with a clear message.
  */
 export default function Login() {
-  const { ready, isAdmin, login, logout } = useAuth();
+  const { ready, isAdmin, isStaff, login, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -26,9 +26,12 @@ export default function Login() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
-  // Already an authenticated admin — skip the form.
-  if (ready && isAdmin) {
-    return <Navigate to={redirect} replace />;
+  // Agents only have Operations; admins go to their requested page (or Home).
+  const destFor = (admin: boolean) => (admin ? redirect : '/operations');
+
+  // Already an authenticated staff member — skip the form.
+  if (ready && isStaff) {
+    return <Navigate to={destFor(isAdmin)} replace />;
   }
 
   async function handleSubmit(event: FormEvent) {
@@ -37,12 +40,13 @@ export default function Login() {
     setBusy(true);
     try {
       const user = await login(email.trim(), password);
-      if (user.role !== 'admin') {
+      const admin = user.role === 'admin';
+      if (user.role !== 'admin' && user.role !== 'agent') {
         await logout();
-        setError('This console is for administrators only.');
+        setError('This console is for Incubator staff only.');
         return;
       }
-      navigate(redirect, { replace: true });
+      navigate(destFor(admin), { replace: true });
     } catch (err) {
       setError(apiErrorMessage(err, 'Sign in failed. Check your credentials.'));
     } finally {
@@ -61,8 +65,8 @@ export default function Login() {
           </div>
 
           <header className="mb-8 text-center">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-950">Marketing Console</h1>
-            <p className="mt-2 text-sm text-gray-600">Sign in with your administrator account.</p>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-950">Admin Console</h1>
+            <p className="mt-2 text-sm text-gray-600">Sign in with your Incubator staff account.</p>
           </header>
 
           {error && (
