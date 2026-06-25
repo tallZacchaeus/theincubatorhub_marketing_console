@@ -27,14 +27,14 @@ import {
 import { createLink, deleteLink, listLinks } from '@/api/endpoints/links';
 import ConfirmDialog from '@/components/ConfirmDialog';
 import HelpHint from '@/components/HelpHint';
+import LinkFormFields from '@/components/LinkFormFields';
 import StatusBadge from '@/components/StatusBadge';
 import SuccessCelebration from '@/components/motion/SuccessCelebration';
 import PageHeader from '@/components/layout/PageHeader';
 import { Flip, gsap, useGSAP } from '@/lib/gsap';
 import { useReducedMotion } from '@/hooks/useReducedMotion';
-import { SelectField, TextField } from '@/components/form/fields';
 import { applyApiErrors } from '@/components/form/applyApiErrors';
-import { LINK_TYPE_OPTIONS, linkTypeLabel } from '@/content/linkTypes';
+import { linkTypeLabel } from '@/content/linkTypes';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -326,17 +326,7 @@ export default function CampaignDetail() {
               })}
               className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
-              <TextField name="destination_url" label="Destination URL" placeholder="https://incubatorhub.com/apply" />
-              <SelectField
-                name="link_type"
-                label="What's this link for?"
-                options={LINK_TYPE_OPTIONS}
-                hint="How you'll group this link's clicks in analytics."
-              />
-              <TextField name="label" label="Label" placeholder="Optional" />
-              <TextField name="utm_source" label="utm_source" placeholder="Optional" hint="Optional tags for your own reporting." />
-              <TextField name="utm_medium" label="utm_medium" placeholder="Optional" />
-              <TextField name="utm_campaign" label="utm_campaign" placeholder="Optional" />
+              <LinkFormFields />
               <div className="sm:col-span-2 lg:col-span-3">
                 <Button type="submit" data-tour="add-link" disabled={addLinkMut.isPending}>
                   <Plus className="h-4 w-4" />

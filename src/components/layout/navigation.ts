@@ -2,6 +2,7 @@ import {
   BarChart3,
   HelpCircle,
   LayoutDashboard,
+  Link2,
   Mail,
   Megaphone,
   Send,
@@ -69,6 +70,12 @@ export const navSections: NavSection[] = [
         path: '/campaigns',
         icon: Send,
         explainer: 'An email you send to an audience, with tracked links and results.',
+      },
+      {
+        label: 'Tracked links',
+        path: '/links',
+        icon: Link2,
+        explainer: 'Generate a link for any channel — clicks and signups are still counted.',
       },
       {
         label: 'Analytics',

@@ -98,7 +98,25 @@ export interface TrackedLink {
   marketing_category_id: number | null;
   utm: { source: string | null; medium: string | null; campaign: string | null; content: string | null };
   click_count: number;
+  /** Conversions attributed to this link (signups). Added in the analytics-console phase. */
+  conversions?: number;
+  last_clicked_at?: string | null;
   created_at: string | null;
+}
+
+export interface LinkAnalytics {
+  link: {
+    id: number;
+    label: string | null;
+    link_type: string;
+    destination_url: string;
+    tracked_url: string;
+    utm: { source: string | null; medium: string | null; campaign: string | null; content: string | null };
+    created_at: string | null;
+  };
+  totals: { clicks: number; conversions: number; conversion_rate: number };
+  clicks_series: { date: string; clicks: number }[];
+  top_referers: { referer: string; clicks: number }[];
 }
 
 export interface CampaignAnalytics {

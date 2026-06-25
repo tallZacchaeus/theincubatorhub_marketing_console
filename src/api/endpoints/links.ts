@@ -1,11 +1,17 @@
 import { apiClient } from '@/api/client';
-import type { TrackedLink } from '@/types';
+import type { LinkAnalytics, TrackedLink } from '@/types';
 
 const BASE = '/api/admin/marketing/links';
 
 export async function listLinks(params: { marketing_campaign_id?: number; link_type?: string } = {}): Promise<TrackedLink[]> {
   const { data } = await apiClient.get(BASE, { params });
   return data.data.links;
+}
+
+/** Per-link click/conversion analytics (standalone or campaign links). */
+export async function linkAnalytics(id: number): Promise<LinkAnalytics> {
+  const { data } = await apiClient.get(`${BASE}/${id}/analytics`);
+  return data.data;
 }
 
 export async function createLink(payload: {
