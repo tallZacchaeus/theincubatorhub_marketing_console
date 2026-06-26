@@ -195,7 +195,7 @@ export default function AppShell() {
               <LogoMark className="h-10 w-10" />
               <span>
                 <span className="block font-bold text-gray-950">Incubator Hub</span>
-                <span className="block text-xs font-medium text-gray-500">Analytics</span>
+                <span className="block text-xs font-medium text-gray-500">Marketing</span>
               </span>
             </button>
           </div>
@@ -230,7 +230,7 @@ export default function AppShell() {
             <LogoMark className="h-9 w-9" />
             <span>
               <span className="block text-sm font-bold text-gray-950">Incubator Hub</span>
-              <span className="block text-xs text-gray-500">Analytics</span>
+              <span className="block text-xs text-gray-500">Marketing</span>
             </span>
           </button>
           <button

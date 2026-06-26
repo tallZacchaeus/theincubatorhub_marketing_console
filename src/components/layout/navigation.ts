@@ -1,10 +1,7 @@
 import {
   BarChart3,
-  ClipboardList,
   HelpCircle,
-  GraduationCap,
   LayoutDashboard,
-  LineChart,
   Link2,
   Mail,
   Megaphone,
@@ -12,7 +9,6 @@ import {
   Settings,
   Target,
   UserCircle,
-  UserPlus,
   Users,
   type LucideIcon,
 } from 'lucide-react';
@@ -47,52 +43,6 @@ export interface NavSection {
  * its title band (see pageMetaFor).
  */
 export const navSections: NavSection[] = [
-  {
-    id: 'reports',
-    label: 'Reports',
-    icon: LineChart,
-    items: [
-      {
-        label: 'Overview',
-        path: '/reports/overview',
-        icon: BarChart3,
-        explainer: 'Registration, onboarding, and learning at a glance for the chosen period.',
-      },
-      {
-        label: 'Registration',
-        path: '/reports/registration',
-        icon: UserPlus,
-        explainer: "Who's signing up, from where, and whether they verify.",
-      },
-      {
-        label: 'Onboarding',
-        path: '/reports/onboarding',
-        icon: Target,
-        explainer: 'Where people drop off between signup and enrolment, and how long each stage takes.',
-      },
-      {
-        label: 'Learning',
-        path: '/reports/learning',
-        icon: GraduationCap,
-        explainer: 'Are enrolled students showing up and finishing?',
-      },
-    ],
-  },
-  {
-    id: 'operations',
-    label: 'Operations',
-    icon: ClipboardList,
-    roles: ['admin', 'agent'],
-    items: [
-      {
-        label: 'Daily operations',
-        path: '/operations',
-        icon: ClipboardList,
-        explainer: 'Sprint funnel, daily targets, pace, and team activity.',
-        roles: ['admin', 'agent'],
-      },
-    ],
-  },
   {
     id: 'campaigns',
     label: 'Campaigns',
@@ -196,8 +146,7 @@ export function sectionIdForPath(pathname: string): string | undefined {
 
 /**
  * Sections (and their items) visible to a given role. Unspecified `roles` default
- * to admin-only, so today every section shows for admins; agent-visible sections
- * (Operations) opt in via `roles: ['admin','agent']` when they land.
+ * to admin-only; the marketing console is admin-only today.
  */
 export function visibleSections(role: NavRole | undefined): NavSection[] {
   if (!role) return [];
